@@ -9,12 +9,12 @@ namespace LeetCodeAnswer
         {
             Solution solution = new Solution();
             object result;
-            result = solution.PlusOne(new int[] { 1,2,3,9 });
-            
+            result = solution.DeleteDuplicates(new ListNode(1) { next = new ListNode(1) { next = new ListNode(2) { next = new ListNode(3) { next = new ListNode(3) } } } });
+
             Console.WriteLine("Hello World!");
         }
     }
 
 
-   
+
 }

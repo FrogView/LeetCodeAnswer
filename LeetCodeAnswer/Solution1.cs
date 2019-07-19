@@ -8,6 +8,155 @@ namespace LeetCodeAnswer
 {
     public partial class Solution
     {
+        /// <summary>
+        ///  Symmetric Tree
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public bool IsSymmetric(TreeNode root)
+        {
+            //左右对称，即 .left==.right
+            if (root == null) return true;
+
+            bool IsSame(TreeNode p,TreeNode q)
+            {
+                if (p == null && q == null) return true;
+                if (p?.val != q?.val) return false;
+
+                return IsSame(p.left, q.right) && IsSame(p.right, q.left);
+            }
+
+            return IsSame(root.left, root.right);
+        }
+        public class TreeNode
+        {
+            public int val;
+            public TreeNode left;
+            public TreeNode right;
+            public TreeNode(int x) { val = x; }
+        }
+        /// <summary>
+        /// Same Tree
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        public bool IsSameTree(TreeNode p, TreeNode q)
+        {
+            if (p == null && q == null) return true;
+            if (p?.val != q?.val) return false;
+
+            return IsSameTree(p.right, q.right) && IsSameTree(p.left, q.left);
+        }
+        /// <summary>
+        /// Merge Sorted Array
+        /// </summary>
+        /// <param name="nums1"></param>
+        /// <param name="m"></param>
+        /// <param name="nums2"></param>
+        /// <param name="n"></param>
+        public void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            int i1 = m - 1, i2 = n - 1, i = m + n - 1;
+            while (i2 >= 0)
+                nums1[i--] = i1 < 0 ? nums2[i2--]
+                                    : nums2[i2] >= nums1[i1] ? nums2[i2--] : nums1[i1--];
+        }
+        /// <summary>
+        /// Remove Duplicates from Sorted List
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            if (head == null) return null;
+            List<int> vals = new List<int>();
+            ListNode res = new ListNode(0) {  };
+            ListNode pre = res;
+            while (head != null)
+            {
+                if (!vals.Contains(head.val))
+                {
+                    vals.Add(head.val);
+                    res.next = new ListNode(head.val);
+                    res = res.next;
+                }
+                head = head.next;
+            }
+            return pre.next;
+        }
+
+        /// <summary>
+        /// Climbing Stairs
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public int ClimbStairs(int n)
+        {
+            //爬楼梯
+            /*
+            第 i 阶可以由以下两种方法得到：
+            在第 (i−1) 阶后向上爬一阶。
+            在第 (i−2) 阶后向上爬 2 阶。
+            所以到达第 i 阶的方法总数就是到第 (i−1) 阶和第 (i−2) 阶的方法数之和。
+            令 dp[i] 表示能到达第 i 阶的方法总数：
+            dp[i]=dp[i−1]+dp[i−2]
+            */
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+            int dp0 = 1, dp1 = 1;
+            int res = 0;
+            for (int i = 2; i <= n; i++)
+            {
+                res = dp0 + dp1;
+
+                dp0 = dp1;
+                dp1 = res;
+            }
+            return res;
+        }
+        /// <summary>
+        /// Sqrt(x)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public int MySqrt(int x)
+        {
+            var result = Math.Sqrt(x);
+            return (int)result;
+        }
+
+        /// <summary>
+        /// Add Binary
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public string AddBinary(string a, string b)
+        {
+            int aIndex = a.Length - 1;
+            int bIndex = b.Length - 1;
+            int carry = 0, bitA = 0, bitB = 0, sum = 0;
+            StringBuilder sb = new StringBuilder();
+            while (aIndex >= 0 || bIndex >= 0)
+            {
+                bitA = aIndex >= 0 ? a[aIndex] - '0' : 0;
+                bitB = bIndex >= 0 ? b[bIndex] - '0' : 0;
+                sum = bitA + bitB + carry;
+
+                switch (sum)
+                {
+                    case 0:sb.Insert(0,0);carry = 0; break;
+                    case 1:sb.Insert(0,1);carry = 0; break;
+                    case 2:sb.Insert(0,0);carry = 1; break;
+                    case 3:sb.Insert(0,1);carry = 1; break;
+                }
+                aIndex--;
+                bIndex--;
+            }
+            return carry == 0 ? sb.ToString() : sb.Insert(0,carry).ToString();
+        }
+
         public int[] PlusOne(int[] digits)
         {
             if (digits.All(p => p == 9))
