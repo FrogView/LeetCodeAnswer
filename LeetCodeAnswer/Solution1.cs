@@ -9,6 +9,62 @@ namespace LeetCodeAnswer
     public partial class Solution
     {
         /// <summary>
+        /// Binary Tree Level Order Traversal II
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public IList<IList<int>> LevelOrderBottom(TreeNode root)
+        {
+            if (root == null) return new List<IList<int>>();
+            Stack<IList<int>> stack = new Stack<IList<int>>();
+            Queue<TreeNode> allNext(Queue<TreeNode> treeNodes,out Queue<int> vals)
+            {
+                Queue<TreeNode> nodes = new Queue<TreeNode>();
+                vals = new Queue<int>();
+                while(treeNodes.TryDequeue(out TreeNode node))
+                {
+                    vals.Enqueue(node.val);
+                    if (node.left != null)
+                    {
+                        nodes.Enqueue(node.left);
+                      
+                    }
+                    if (node.right != null)
+                    {
+                        nodes.Enqueue(node.right);
+                      
+                    }
+                }
+                return nodes;
+            }
+
+            Queue<TreeNode> trees = new Queue<TreeNode>();
+            trees.Enqueue(root);
+            while(trees != null && trees.Count() > 0)
+            {
+                trees = allNext(trees, out Queue<int> vals);
+                stack.Push(vals.ToList());
+            }
+
+            return stack.ToList();
+        }
+        /// <summary>
+        /// Maximum Depth of Binary Tree
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public int MaxDepth(TreeNode root)
+        {
+            if (root == null) return 0;
+           
+            int maxDepth(TreeNode treeNode)
+            {
+                return treeNode == null ? 0 : 1 + Math.Max(maxDepth(treeNode.left), maxDepth(treeNode.right));
+            }
+
+            return maxDepth(root);
+        }
+        /// <summary>
         ///  Symmetric Tree
         /// </summary>
         /// <param name="root"></param>
