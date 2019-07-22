@@ -9,6 +9,36 @@ namespace LeetCodeAnswer
     public partial class Solution
     {
         /// <summary>
+        /// Convert Sorted Array to Binary Search Tree
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public TreeNode SortedArrayToBST(int[] nums)
+        {
+            //递归方法，每次取中间值
+            if (nums == null) return null;
+            int count = nums.Length;
+            return numArrayToBST(nums, 0, count - 1);
+        }
+
+        public TreeNode numArrayToBST(int[] nums,int start,int end)
+        {
+            if (start > end)
+            {
+                return null;
+            }
+            if (start == end)
+            {
+                return new TreeNode(nums[start]);
+            }
+            int index = (start + end) / 2;
+            TreeNode treeNode = new TreeNode(nums[index]);
+            treeNode.left = numArrayToBST(nums, start, index-1);
+            treeNode.right = numArrayToBST(nums, index + 1, end);
+            return treeNode;
+        }
+
+        /// <summary>
         /// Binary Tree Level Order Traversal II
         /// </summary>
         /// <param name="root"></param>
@@ -16,37 +46,29 @@ namespace LeetCodeAnswer
         public IList<IList<int>> LevelOrderBottom(TreeNode root)
         {
             if (root == null) return new List<IList<int>>();
-            Stack<IList<int>> stack = new Stack<IList<int>>();
-            Queue<TreeNode> allNext(Queue<TreeNode> treeNodes,out Queue<int> vals)
+            Stack<IList<int>> res = new Stack<IList<int>>();
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Any())
             {
-                Queue<TreeNode> nodes = new Queue<TreeNode>();
-                vals = new Queue<int>();
-                while(treeNodes.TryDequeue(out TreeNode node))
+                List<int> levelList = new List<int>();
+                int levelCount = queue.Count;
+                for (int i = 0; i < levelCount; i++)
                 {
-                    vals.Enqueue(node.val);
+                    var node = queue.Dequeue();
+                    levelList.Add(node.val);
                     if (node.left != null)
                     {
-                        nodes.Enqueue(node.left);
-                      
+                        queue.Enqueue(node.left);
                     }
                     if (node.right != null)
                     {
-                        nodes.Enqueue(node.right);
-                      
+                        queue.Enqueue(node.right);
                     }
                 }
-                return nodes;
+                res.Push(levelList);
             }
-
-            Queue<TreeNode> trees = new Queue<TreeNode>();
-            trees.Enqueue(root);
-            while(trees != null && trees.Count() > 0)
-            {
-                trees = allNext(trees, out Queue<int> vals);
-                stack.Push(vals.ToList());
-            }
-
-            return stack.ToList();
+            return res.ToList();
         }
         /// <summary>
         /// Maximum Depth of Binary Tree
@@ -84,13 +106,7 @@ namespace LeetCodeAnswer
 
             return IsSame(root.left, root.right);
         }
-        public class TreeNode
-        {
-            public int val;
-            public TreeNode left;
-            public TreeNode right;
-            public TreeNode(int x) { val = x; }
-        }
+       
         /// <summary>
         /// Same Tree
         /// </summary>
@@ -544,5 +560,13 @@ namespace LeetCodeAnswer
         public int val;
         public ListNode next;
         public ListNode(int x) { val = x; }
+    }
+
+    public class TreeNode
+    {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int x) { val = x; }
     }
 }
