@@ -9,6 +9,50 @@ namespace LeetCodeAnswer
     public partial class Solution
     {
         /// <summary>
+        /// Minimum Depth of Binary Tree
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public int MinDepth(TreeNode root)
+        {
+            if (root == null) return 0;
+            else if (root.left == null && root.right == null) return 1;
+            else if (root.left == null)
+            {
+                return 1 + MinDepth(root.right);
+            }
+            else if (root.right == null)
+            {
+                return 1 + MinDepth(root.left);
+            }
+            else
+            {
+                return 1 + Math.Min(MinDepth(root.left), MinDepth(root.right));
+            }
+        }
+
+        /// <summary>
+        /// Balanced Binary Tree
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public bool IsBalanced(TreeNode root)
+        {
+            //判断每一个子树的高度差
+            //PS: 二叉树的操作好像大部分都可以通过子树的递归来实现
+            if (root == null) return true;
+
+            if(IsBalanced(root.left) && IsBalanced(root.right) && Math.Abs(maxDepth(root.left) - maxDepth(root.right)) <=1 )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Convert Sorted Array to Binary Search Tree
         /// </summary>
         /// <param name="nums"></param>
@@ -78,14 +122,14 @@ namespace LeetCodeAnswer
         public int MaxDepth(TreeNode root)
         {
             if (root == null) return 0;
-           
-            int maxDepth(TreeNode treeNode)
-            {
-                return treeNode == null ? 0 : 1 + Math.Max(maxDepth(treeNode.left), maxDepth(treeNode.right));
-            }
-
             return maxDepth(root);
         }
+
+        public int maxDepth(TreeNode treeNode)
+        {
+            return treeNode == null ? 0 : 1 + Math.Max(maxDepth(treeNode.left), maxDepth(treeNode.right));
+        }
+
         /// <summary>
         ///  Symmetric Tree
         /// </summary>
