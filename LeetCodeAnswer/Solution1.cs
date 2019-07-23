@@ -9,6 +9,49 @@ namespace LeetCodeAnswer
     public partial class Solution
     {
         /// <summary>
+        /// Best Time to Buy and Sell Stock II
+        /// </summary>
+        /// <param name="prices"></param>
+        /// <returns></returns>
+        public int MaxProfit2(int[] prices)
+        {
+            //只要是正收益就全部加起来
+            if (prices == null) return 0;
+            int maxProfit = 0;
+            for (int i = 1; i < prices.Length; i++)
+            {
+                if (prices[i] > prices[i - 1])
+                {
+                    maxProfit += prices[i] - prices[i - 1];
+                }
+            }
+            return maxProfit;
+        }
+        /// <summary>
+        /// Best Time to Buy and Sell Stock
+        /// </summary>
+        /// <param name="prices"></param>
+        /// <returns></returns>
+        public int MaxProfit(int[] prices)
+        {
+            //找极值即可
+            if (prices == null || prices.Length <= 1) return 0;
+            int max = 0, minPrice = int.MaxValue;
+            for (int i = 0; i < prices.Length; i++)
+            {
+                if (prices[i] < minPrice)
+                {
+                    minPrice = prices[i];
+                }
+                if (prices[i] - minPrice > max)
+                {
+                    max = prices[i] - minPrice;
+                }
+            }
+            return max < 0 ? 0 : max;
+        }
+
+        /// <summary>
         /// Pascal's Triangle II
         /// </summary>
         /// <param name="rowIndex"></param>

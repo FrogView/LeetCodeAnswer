@@ -9,6 +9,7 @@ namespace LeetCodeAnswer
         {
             Solution solution = new Solution();
             object result;
+            result = solution.MaxProfit(new int[] { 7, 1, 5, 3, 6, 4 });
             result = solution.GetRow(5);
             result = solution.HasPathSum(
                 new TreeNode(5)
