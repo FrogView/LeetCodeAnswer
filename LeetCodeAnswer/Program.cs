@@ -9,7 +9,39 @@ namespace LeetCodeAnswer
         {
             Solution solution = new Solution();
             object result;
-            result = solution.LevelOrderBottom(new TreeNode(1) { left = new TreeNode(1) { left = new TreeNode(2) { left = new TreeNode(3) { left = new TreeNode(3) } } } });
+            result = solution.GetRow(5);
+            result = solution.HasPathSum(
+                new TreeNode(5)
+                {
+                    left = new TreeNode(4)
+                     {
+                        left = new TreeNode(11)
+                        {
+                            left = new TreeNode(7)
+                            {
+                                
+                            },
+                            right=new TreeNode(2)
+                            {
+
+                            }
+                        }
+                    },
+                    right=new TreeNode(8)
+                    {
+                        left = new TreeNode(13)
+                        {
+                            
+                        },
+                        right=new TreeNode(4)
+                        {
+                            right=new TreeNode(1)
+                            {
+
+                            }
+                        }
+                    }
+                },22);
 
             Console.WriteLine("Hello World!");
         }

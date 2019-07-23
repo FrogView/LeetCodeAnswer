@@ -9,6 +9,91 @@ namespace LeetCodeAnswer
     public partial class Solution
     {
         /// <summary>
+        /// Pascal's Triangle II
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <returns></returns>
+        public IList<int> GetRow(int rowIndex)
+        {
+            if (rowIndex == 0) return new List<int>() { 1 };
+
+            var preRows = GetRow(rowIndex - 1);
+            IList<int> rowList = new List<int>();
+            for (int j = 0; j <= rowIndex; j++)
+            {
+                var left = (j - 1) >= 0 ? preRows[j - 1] : 0;
+                var right = j >= preRows.Count ? 0 : preRows[j];
+                rowList.Add(left + right);
+            }
+            return rowList;
+        }
+        /// <summary>
+        /// Pascal's Triangle
+        /// </summary>
+        /// <param name="numRows"></param>
+        /// <returns></returns>
+        public IList<IList<int>> Generate(int numRows)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            if (numRows == 0) return res;
+            for (int i = 0; i < numRows; i++)
+            {
+                IList<int> rowList = new List<int>();
+                if (i == 0)
+                {
+                    rowList = new List<int>() { 1 };
+                }
+                else
+                {
+                    for (int j = 0; j <= i; j++)
+                    {
+                        var left = (j - 1) >= 0 ? res[i - 1][j - 1] : 0;
+                        var right = j >= res[i - 1].Count ? 0 : res[i - 1][j];
+                        rowList.Add(left + right);
+                    }
+                }
+                res.Add(rowList);
+            }
+            return res;
+        }
+        /// <summary>
+        /// Path Sum
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="sum"></param>
+        /// <returns></returns>
+        public bool HasPathSum(TreeNode root, int sum)
+        {
+            var sumList = GetSumList(root);
+            if (sumList.Contains(sum))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<int> GetSumList(TreeNode treeNode)
+        {
+            if (treeNode == null) return new List<int>();
+            if (treeNode.left == null && treeNode.right == null)
+            {
+                return new List<int>() { treeNode.val };
+            }
+            List<int> sumList = new List<int>();
+            if (treeNode.right != null)
+            {
+                sumList.AddRange(GetSumList(treeNode.right).Select(p => p += treeNode.val).ToList());
+            }
+            if (treeNode.left != null)
+            {
+                sumList.AddRange(GetSumList(treeNode.left).Select(p => p += treeNode.val).ToList());
+            }
+            return sumList;
+        }
+        /// <summary>
         /// Minimum Depth of Binary Tree
         /// </summary>
         /// <param name="root"></param>
