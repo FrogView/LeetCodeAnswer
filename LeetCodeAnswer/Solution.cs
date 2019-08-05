@@ -9,6 +9,97 @@ namespace LeetCodeAnswer
     public partial class Solution
     {
         /// <summary>
+        /// Intersection of Two Linked Lists
+        /// </summary>
+        /// <param name="headA"></param>
+        /// <param name="headB"></param>
+        /// <returns></returns>
+        public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        {
+            //根据链表长度最终A和B会同时到达尾部。。。
+            if (headA == null || headB == null) return null;
+            ListNode pA = headA, pB = headB;
+            while (pA != pB)
+            {
+                pA = pA == null ? headB : pA.next;
+                pB = pB == null ? headA : pB.next;
+            }
+            return pA;
+        }
+        /// <summary>
+        /// Linked List Cycle
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public bool HasCycle(ListNode head)
+        {
+            var fast = head;
+            var slow = head;
+
+            while(fast!=null && fast.next!=null)
+            {
+                fast = fast.next.next;
+                slow = slow.next;
+                if (slow == fast)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// Single Number
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int SingleNumber(int[] nums)
+        {
+            int x = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                //this is magical
+                x ^= nums[i];
+            }
+            return x;
+        }
+        /// <summary>
+        /// Valid Palindrome
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public bool IsPalindrome(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return true;
+            s = s.ToLower();
+            int i = 0;
+            int j = s.Length - 1;
+            while (i < j)
+            {
+                if(!char.IsLetterOrDigit(s[i]))
+                {
+                    i++;
+                    continue;
+                }
+                if (!char.IsLetterOrDigit(s[j]))
+                {
+                    j--;
+                    continue;
+                }
+
+                if (s[i] == s[j])
+                {
+                    i++;
+                    j--;
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        /// <summary>
         /// Best Time to Buy and Sell Stock II
         /// </summary>
         /// <param name="prices"></param>
@@ -740,5 +831,38 @@ namespace LeetCodeAnswer
         public TreeNode left;
         public TreeNode right;
         public TreeNode(int x) { val = x; }
+    }
+
+    /// <summary>
+    /// Min Stack
+    /// </summary>
+    public class MinStack
+    {
+        private List<int> list = new List<int>();
+        /** initialize your data structure here. */
+        public MinStack()
+        {
+
+        }
+
+        public void Push(int x)
+        {
+            list.Insert(0, x);
+        }
+
+        public void Pop()
+        {
+            list.RemoveAt(0);
+        }
+
+        public int Top()
+        {
+            return list[0];
+        }
+
+        public int GetMin()
+        {
+            return list.Min();
+        }
     }
 }
