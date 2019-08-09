@@ -9,6 +9,73 @@ namespace LeetCodeAnswer
     public partial class Solution
     {
         /// <summary>
+        /// Majority Element
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int MajorityElement(int[] nums)
+        {
+            int minLen = nums.Length / 2;
+            Dictionary<int, int> countDic = new Dictionary<int, int>();
+            foreach (var item in nums)
+            {
+                if (countDic.ContainsKey(item))
+                {
+                    countDic[item]++;
+                }
+                else
+                {
+                    countDic.Add(item, 1);
+                }
+                if (countDic[item] > minLen)
+                {
+                    return item;
+                }
+            }
+            return 0;
+        }
+        /// <summary>
+        /// Excel Sheet Column Title
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public string ConvertToTitle(int n)
+        {
+            //进制转化
+            int temp = n;
+            StringBuilder tempResult = new StringBuilder();
+            while (temp != 0)
+            {
+                temp--;
+                tempResult.Insert(0,(char)(temp % 26 + 65));
+                temp /= 26;
+            }
+
+            return tempResult.ToString();
+        }
+        /// <summary>
+        /// Two Sum II - Input array is sorted
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public int[] TwoSum(int[] numbers, int target)
+        {
+            //大则加，小则减
+            int l = 0, r = numbers.Length - 1, sum;
+            while (true)
+            {
+                sum = numbers[l] + numbers[r];
+                if (sum == target)
+                    break;
+                else if (sum < target)
+                    l += 1;
+                else
+                    r -= 1;
+            }
+            return new int[2] { l + 1, r + 1 };
+        }
+        /// <summary>
         /// Intersection of Two Linked Lists
         /// </summary>
         /// <param name="headA"></param>
@@ -36,7 +103,7 @@ namespace LeetCodeAnswer
             var fast = head;
             var slow = head;
 
-            while(fast!=null && fast.next!=null)
+            while (fast != null && fast.next != null)
             {
                 fast = fast.next.next;
                 slow = slow.next;
@@ -75,7 +142,7 @@ namespace LeetCodeAnswer
             int j = s.Length - 1;
             while (i < j)
             {
-                if(!char.IsLetterOrDigit(s[i]))
+                if (!char.IsLetterOrDigit(s[i]))
                 {
                     i++;
                     continue;
@@ -261,7 +328,7 @@ namespace LeetCodeAnswer
             //PS: 二叉树的操作好像大部分都可以通过子树的递归来实现
             if (root == null) return true;
 
-            if(IsBalanced(root.left) && IsBalanced(root.right) && Math.Abs(maxDepth(root.left) - maxDepth(root.right)) <=1 )
+            if (IsBalanced(root.left) && IsBalanced(root.right) && Math.Abs(maxDepth(root.left) - maxDepth(root.right)) <= 1)
             {
                 return true;
             }
@@ -284,7 +351,7 @@ namespace LeetCodeAnswer
             return numArrayToBST(nums, 0, count - 1);
         }
 
-        public TreeNode numArrayToBST(int[] nums,int start,int end)
+        public TreeNode numArrayToBST(int[] nums, int start, int end)
         {
             if (start > end)
             {
@@ -296,7 +363,7 @@ namespace LeetCodeAnswer
             }
             int index = (start + end) / 2;
             TreeNode treeNode = new TreeNode(nums[index]);
-            treeNode.left = numArrayToBST(nums, start, index-1);
+            treeNode.left = numArrayToBST(nums, start, index - 1);
             treeNode.right = numArrayToBST(nums, index + 1, end);
             return treeNode;
         }
@@ -359,7 +426,7 @@ namespace LeetCodeAnswer
             //左右对称，即 .left==.right
             if (root == null) return true;
 
-            bool IsSame(TreeNode p,TreeNode q)
+            bool IsSame(TreeNode p, TreeNode q)
             {
                 if (p == null && q == null) return true;
                 if (p?.val != q?.val) return false;
@@ -369,7 +436,7 @@ namespace LeetCodeAnswer
 
             return IsSame(root.left, root.right);
         }
-       
+
         /// <summary>
         /// Same Tree
         /// </summary>
@@ -406,7 +473,7 @@ namespace LeetCodeAnswer
         {
             if (head == null) return null;
             List<int> vals = new List<int>();
-            ListNode res = new ListNode(0) {  };
+            ListNode res = new ListNode(0) { };
             ListNode pre = res;
             while (head != null)
             {
@@ -481,15 +548,15 @@ namespace LeetCodeAnswer
 
                 switch (sum)
                 {
-                    case 0:sb.Insert(0,0);carry = 0; break;
-                    case 1:sb.Insert(0,1);carry = 0; break;
-                    case 2:sb.Insert(0,0);carry = 1; break;
-                    case 3:sb.Insert(0,1);carry = 1; break;
+                    case 0: sb.Insert(0, 0); carry = 0; break;
+                    case 1: sb.Insert(0, 1); carry = 0; break;
+                    case 2: sb.Insert(0, 0); carry = 1; break;
+                    case 3: sb.Insert(0, 1); carry = 1; break;
                 }
                 aIndex--;
                 bIndex--;
             }
-            return carry == 0 ? sb.ToString() : sb.Insert(0,carry).ToString();
+            return carry == 0 ? sb.ToString() : sb.Insert(0, carry).ToString();
         }
 
         public int[] PlusOne(int[] digits)
@@ -605,7 +672,7 @@ namespace LeetCodeAnswer
         /// <returns></returns>
         public int SearchInsert(int[] nums, int target)
         {
-           
+
             int i = nums.ToList().BinarySearch(target);
             return i >= 0 ? i : ~i;
         }
@@ -657,7 +724,7 @@ namespace LeetCodeAnswer
         /// <returns></returns>
         public int RemoveDuplicates(int[] nums)
         {
-            if (nums==null || nums.Length <= 0) return 0;
+            if (nums == null || nums.Length <= 0) return 0;
             if (nums.Length == 1) return 1;
             int len = 1;
             for (int i = 1; i < nums.Length; i++)
@@ -682,7 +749,7 @@ namespace LeetCodeAnswer
             if (l1 == null && l2 == null) return null;
             ListNode result = new ListNode(0);
             ListNode temp = result;
-            while (l1!=null && l2!=null)
+            while (l1 != null && l2 != null)
             {
                 if (l1.val < l2.val)
                 {
@@ -747,7 +814,7 @@ namespace LeetCodeAnswer
             foreach (var item in maxLengthStr)
             {
                 temp += item;
-                if(strList.TrueForAll(p => p.StartsWith(temp)))
+                if (strList.TrueForAll(p => p.StartsWith(temp)))
                 {
                     result = temp;
                 }

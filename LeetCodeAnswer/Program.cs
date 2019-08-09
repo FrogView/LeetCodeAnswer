@@ -9,6 +9,7 @@ namespace LeetCodeAnswer
         {
             Solution solution = new Solution();
             object result;
+            result = solution.ConvertToTitle(701);
             result = solution.SingleNumber(new int[] {  2,2,1});
             result = solution.IsPalindrome("race a car");
             result = solution.MaxProfit(new int[] { 7, 1, 5, 3, 6, 4 });
