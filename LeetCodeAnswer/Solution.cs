@@ -8,6 +8,27 @@ namespace LeetCodeAnswer
 {
     public partial class Solution
     {
+
+
+        //Second Highest Salary
+        /*
+        SELECT
+        (SELECT DISTINCT
+            Salary
+        FROM
+            Employee
+        ORDER BY Salary DESC
+        OFFSET 1 ROWS
+        FETCH NEXT 1 ROWS ONLY) AS SecondHighestSalary
+        ;
+        */
+
+        //Combine Two Tables
+        /*
+        SELECT a.FirstName,a.LastName,b.City,b.State FROM Person as a
+        LEFT JOIN Address as b on a.PersonId=b.PersonId
+        */
+
         /// <summary>
         /// Factorial Trailing Zeroes
         /// </summary>
@@ -15,7 +36,22 @@ namespace LeetCodeAnswer
         /// <returns></returns>
         public int TrailingZeroes(int n)
         {
-            return 0;
+            //every five numbers have one zero.
+            if (n <= 0) return 0;
+            int count = 0;
+            while (n > 0)
+            {
+                count += n / 5;
+                n = n / 5;
+            }
+            return count;
+        }
+
+        public int Factorial(int num)
+        {
+            if (num <= 0) return 0;
+            if (num == 1) return 1;
+            return num * Factorial(num - 1);
         }
         /// <summary>
         /// Excel Sheet Column Number
