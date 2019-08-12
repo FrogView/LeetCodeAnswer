@@ -9,6 +9,31 @@ namespace LeetCodeAnswer
     public partial class Solution
     {
         /// <summary>
+        /// Factorial Trailing Zeroes
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public int TrailingZeroes(int n)
+        {
+            return 0;
+        }
+        /// <summary>
+        /// Excel Sheet Column Number
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public int TitleToNumber(string s)
+        {
+            int index = 0;
+            int num = 0;
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                int val = s[i] - 'A' + 1;
+                num += val * (int)Math.Pow(26, index++);
+            }
+            return num;
+        }
+        /// <summary>
         /// Majority Element
         /// </summary>
         /// <param name="nums"></param>
