@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,179 @@ namespace LeetCodeAnswer
 {
     public partial class Solution
     {
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if(HaveNode(root,p) && HaveNode(root,q) && )
+        }
 
+        public bool HaveNode(TreeNode root,TreeNode node)
+        {
+            if (root != null)
+            {
+                if (root.val == node.val)
+                {
+                    return true;
+                }
+                else
+                {
+                    return HaveNode(root.left, node) || HaveNode(root.right, node);
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsPalindrome(ListNode head)
+        {
+            Queue<int> queue = new Queue<int>();
+            Stack<int> stack = new Stack<int>();
+
+            while (head != null)
+            {
+                queue.Enqueue(head.val);
+                stack.Push(head.val);
+                head = head.next;
+            }
+
+            while(queue.TryDequeue(out int val1) && stack.TryPop(out int val2))
+            {
+                if (val1 != val2) return false;
+            }
+
+            return true;
+        }
+
+        public bool IsPowerOfTwo(int n)
+        {
+            if (n <= 0) return false;
+            for (int i = 0; i < 32; i++)
+            {
+                if ((1 << i) == n)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool ContainsNearbyDuplicate(int[] nums, int k)
+        {
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (map.ContainsKey(nums[i]) && i - map[nums[i]] <= k)
+                {
+                    return true;
+                }
+                map[nums[i]] = i;
+            }
+            return false;
+        }
+        public ListNode ReverseList(ListNode head)
+        {
+            return ReverseNode(head,null);
+        }
+
+        public ListNode ReverseNode(ListNode node,ListNode res)
+        {
+            if (node == null)
+            {
+                return res;
+            }
+            res = new ListNode(node.val) { next = res };
+            return ReverseNode(node.next,res);
+        }
+        public bool IsIsomorphic(string s, string t)
+        {
+            Dictionary<char, char> dict = new Dictionary<char, char>();
+            for (int i = 0; i < s.Length; i++)
+                if (dict.ContainsKey(s[i]) && dict[s[i]] != t[i]) return false;
+                else if (!dict.ContainsKey(s[i]) && dict.ContainsValue(t[i])) return false;
+                else if (!dict.ContainsKey(s[i]) && !dict.ContainsValue(s[i])) dict.Add(s[i], t[i]);
+            return true;
+        }
+        public int CountPrimes(int n)
+        {
+            BitArray array = new BitArray(n);
+            int res = 0;
+            for (int i = 2; i < n; i++)
+            {
+                if (!array[i])
+                {
+                    res++;
+                    for (int j = i; j < n; j+=i)
+                    {
+                        array[j] = true;
+                    }
+                }
+            }
+            return res;
+          
+        }
+
+        public bool IsPrimes(int n)
+        {
+            if (n == 1) return false;
+            for (int i = 2; i <= (int)Math.Sqrt(n); i++)
+            {
+                if (n % i == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public ListNode RemoveElements(ListNode head, int val)
+        {
+            var temp = new ListNode(0) { next = head };
+            var node = temp;
+            while (temp != null && temp.next!=null)
+            {
+                if (temp.next.val == val)
+                {
+                    temp.next = temp.next.next;
+                }
+                else
+                {
+                    temp = temp.next;
+                }
+            }
+            return node.next;
+        }
+
+        public bool IsHappy(int n)
+        {
+            List<int> nums = new List<int>();
+            while (true)
+            {
+                int val = 0;
+                while (n > 0)
+                {
+                    int remainder = n % 10;
+                    val += remainder * remainder;
+                    n = n / 10;
+                }
+                if (val == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (nums.Contains(val))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        nums.Add(val);
+                        n = val;
+                    }
+                }
+            }
+        }
 
         //Second Highest Salary
         /*
