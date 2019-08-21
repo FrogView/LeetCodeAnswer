@@ -52,7 +52,7 @@ namespace LeetCodeAnswer
             result = solution.IsPalindrome("race a car");
             result = solution.MaxProfit(new int[] { 7, 1, 5, 3, 6, 4 });
             result = solution.GetRow(5);
-            result = solution.HasPathSum(
+            result = solution.BinaryTreePaths(
                 new TreeNode(5)
                 {
                     left = new TreeNode(4)
@@ -83,12 +83,15 @@ namespace LeetCodeAnswer
                             }
                         }
                     }
-                },22);
+                });
 
             Console.WriteLine("Hello World!");
         }
+
+        static void Haha()
+        {
+
+        }
+        
     }
-
-
-
 }

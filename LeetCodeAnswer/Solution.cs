@@ -3,15 +3,113 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using NUnit;
 
 namespace LeetCodeAnswer
 {
     public partial class Solution
     {
+        public int FirstBadVersion(int n)
+        {
+            int left = 0;
+            int right = n;
+            while (left < right)
+            {
+                int mid = left + (right - left) / 2;
+                //if (IsBadVersion(mid))
+                //{
+                //    right = mid;
+                //}
+                //else
+                //{
+                //    left = mid + 1;
+                //}
+            }
+            return left;
+        }
+
+        public bool isBadVersion(int n)
+        {
+            return false;
+        }
+        public bool IsUgly(int num)
+        {
+            for (int i = 2; i < 6 && num > 0; i++)
+                while (num % i == 0)
+                    num /= i;
+            return num == 1;
+        }
+        public int AddDigits(int num)
+        {
+            if (num < 10) return num;
+            int curr = 0;
+            while (true)
+            {
+                int add = 0;
+                while (num > 0)
+                {
+                    curr = num % 10;
+                    add += curr;
+                    num = num / 10;
+                }
+                if (add >= 10)
+                {
+                    num = add;
+                    continue;
+                }
+                else
+                {
+                    return add;
+                }
+            }
+
+        }
+
+        public IList<string> BinaryTreePaths(TreeNode root)
+        {
+            //二叉树和堆栈最配了
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            Queue<string> qStr = new Queue<string>();
+            IList<string> result = new List<string>();
+            if (root == null) return result;
+            queue.Enqueue(root); qStr.Enqueue(root.val.ToString());
+            while (queue.Count != 0)
+            {
+                TreeNode cur = queue.Dequeue();
+                string curStr = qStr.Dequeue();
+                if (cur.left == null && cur.right == null) result.Add(curStr);
+                if (cur.left != null)
+                {
+                    queue.Enqueue(cur.left);
+                    qStr.Enqueue(curStr + "->" + cur.left.val);
+                }
+                if (cur.right != null)
+                {
+                    queue.Enqueue(cur.right);
+                    qStr.Enqueue(curStr + "->" + cur.right.val);
+                }
+            }
+            return result;
+        }
+
+        public bool IsAnagram(string s, string t)
+        {
+            return new string(s.OrderBy(c => c).ToArray()) == new string(t.OrderBy(c => c).ToArray());
+        }
         public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
         {
-            if(HaveNode(root,p) && HaveNode(root,q) && )
+            if (HaveNode(root.left, p) && HaveNode(root.left, q))
+            {
+                return LowestCommonAncestor(root.left, p, q);
+            }
+            else if (HaveNode(root.right, p) && HaveNode(root.right, q))
+            {
+                return LowestCommonAncestor(root.right, p, q);
+            }
+            else
+            {
+                return root;
+            }
         }
 
         public bool HaveNode(TreeNode root,TreeNode node)
