@@ -9,6 +9,82 @@ namespace LeetCodeAnswer
 {
     public partial class Solution
     {
+        public string GetHint(string secret, string guess)
+        {
+            var n = secret.Length;
+
+            var countA = 0;
+            var countB = 0;
+
+            var charAndCountSecret = new int[256];
+            var charAndCountGuess = new int[256];
+            for (int i = 0; i < n; i++)
+            {
+                if (secret[i] == guess[i])
+                {
+                    countA++;
+                }
+                else
+                {
+                    charAndCountSecret[secret[i]]++;
+                    charAndCountGuess[guess[i]]++;
+                }
+            }
+
+            for (int i = 0; i < 256; i++)
+            {
+                countB += Math.Min(charAndCountSecret[i], charAndCountGuess[i]);
+            }
+
+            return $"{countA}A{countB}B";
+        }
+        public bool WordPattern(string pattern, string str)
+        {
+            string[] values = str.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            if (values.Length != pattern.Length) return false;
+            Dictionary<char, string> dict = new Dictionary<char, string>();
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                if (dict.ContainsKey(pattern[i]))
+                {
+                    if (dict[pattern[i]] != values[i])
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (dict.ContainsValue(values[i]))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        dict.Add(pattern[i], values[i]);
+                    }
+                }
+            }
+            return true;
+        }
+        public void MoveZeroes(int[] nums)
+        {
+            int curr = 0;
+            bool flag = false;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 0 && !flag)
+                {
+                    flag = true;
+                    curr = i;
+                }
+                if (nums[i] != 0 && flag)
+                {
+                    nums[curr] = nums[i];
+                    nums[i] = 0;
+                    curr++;
+                }
+            }
+        }
         public int FirstBadVersion(int n)
         {
             int left = 0;
