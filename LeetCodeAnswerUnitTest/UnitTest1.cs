@@ -103,5 +103,18 @@ namespace LeetCodeAnswerUnitTest
             var actul = s.GetSub(a, b);
             Assert.AreEqual(expected, actul);
         }
+
+        [TestMethod]
+        [DataRow(new int[] { 3, 2, 1 }, 1)]
+        [DataRow(new int[] { 2, 2, 2, 3, 3, 3, 1 }, 1)]
+        [DataRow(new int[] { 2, 2, 3, 1 }, 1)]
+        [DataRow(new int[] { 1, 2 }, 2)]
+        [DataRow(new int[] {1, 2, 2, 5, 3, 5},2)]
+        [DataRow(new int[] {1, 2, -2147483648}, -2147483648)]
+        public void TestThirdMax(int[] nums,int expected)
+        {
+            var actul = s.ThirdMax(nums);
+            Assert.AreEqual(expected, actul);
+        }
     }
 }
