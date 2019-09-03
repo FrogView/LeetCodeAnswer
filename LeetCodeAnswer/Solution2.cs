@@ -236,11 +236,11 @@ namespace LeetCodeAnswer
                 uint temp = number % 16;
                 if (dict.ContainsKey(temp))
                 {
-                    sb.Insert(0,dict[temp]);
+                    sb.Insert(0, dict[temp]);
                 }
                 else
                 {
-                    sb.Insert(0,temp);
+                    sb.Insert(0, temp);
                 }
                 number = number / 16;
             }
@@ -276,7 +276,7 @@ namespace LeetCodeAnswer
             List<string> list = new List<string>();
             for (int i = 1; i <= n; i++)
             {
-                if(i%3==0 && i % 5 == 0)
+                if (i % 3 == 0 && i % 5 == 0)
                 {
                     list.Add("FizzBuzz");
                 }
@@ -308,7 +308,7 @@ namespace LeetCodeAnswer
             for (int i = 0; i < nums.Length; i++)
             {
                 int value = nums[i];
-                if(value==int.MinValue)
+                if (value == int.MinValue)
                 {
                     s = 1;
                     continue;
@@ -318,7 +318,7 @@ namespace LeetCodeAnswer
                 {
                     if (value > array[j])
                     {
-                        for (int t = array.Length-1; t > j; t--)
+                        for (int t = array.Length - 1; t > j; t--)
                         {
                             array[t] = array[t - 1];
                         }
@@ -328,7 +328,94 @@ namespace LeetCodeAnswer
                     }
                 }
             }
-            return n+s >= 3 ? array[array.Length - 1] : array[0];
+            return n + s >= 3 ? array[array.Length - 1] : array[0];
+        }
+
+        public string AddStrings(string num1, string num2)
+        {
+            int len1 = num1.Length - 1;
+            int len2 = num2.Length - 1;
+            StringBuilder res = new StringBuilder();
+            int pus = 0;
+            int sub = 0;
+            while (len1 >= 0 || len2 >= 0)
+            {
+                int val1 = len1 < 0 ? 0 : num1[len1] - '0';
+                int val2 = len2 < 0 ? 0 : num2[len2] - '0';
+
+                var val = val1 + val2 + pus;
+                if (val >= 10)
+                {
+                    sub = val % 10;
+                    pus = val / 10;
+                }
+                else
+                {
+                    sub = val;
+                    pus = 0;
+                }
+                res.Insert(0, sub);
+
+                len1--;
+                len2--;
+                sub = 0;
+            }
+            if (pus != 0)
+            {
+                res.Insert(0, pus);
+            }
+            return res.ToString();
+        }
+
+        public IList<IList<int>> LevelOrder(Node root)
+        {
+            if (root == null) return new List<IList<int>>();
+            IList<IList<int>> levels = new List<IList<int>>();
+
+            Queue<Node> queue = new Queue<Node>();
+            queue.Enqueue(root);
+            while (queue.Count > 0)
+            {
+                List<int> levelList = new List<int>();
+                int num = queue.Count;
+                for (int i = 0; i < num; i++)
+                {
+                    var node = queue.Dequeue();
+                    levelList.Add(node.val);
+                    if (node.children != null)
+                    {
+                        foreach (var item in node.children)
+                        {
+                            if (queue != null)
+                            {
+                                queue.Enqueue(item);
+                            }
+                        }
+                    }
+                }
+                levels.Add(levelList);
+            }
+            return levels;
+        }
+
+        public int CountSegments(string s)
+        {
+            return s.Split(" ", StringSplitOptions.RemoveEmptyEntries).Length;
+        }
+
+
+    }
+
+    public class Node
+    {
+        public int val;
+        public IList<Node> children;
+
+        public Node() { }
+        public Node(int _val, IList<Node> _children)
+        {
+            val = _val;
+            children = _children;
         }
     }
 }

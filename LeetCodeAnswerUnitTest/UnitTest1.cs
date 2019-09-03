@@ -116,5 +116,17 @@ namespace LeetCodeAnswerUnitTest
             var actul = s.ThirdMax(nums);
             Assert.AreEqual(expected, actul);
         }
+
+        [TestMethod]
+        [DataRow("1", "2", "3")]
+        [DataRow("9","99","108")]
+        [DataRow("11", "22", "33")]
+        [DataRow("0", "0", "0")]
+        [DataRow("19", "89", "108")]
+        public void TestAddStrings(string a, string b, string expected)
+        {
+            var actul = s.AddStrings(a, b);
+            Assert.AreEqual(expected, actul);
+        }
     }
 }
