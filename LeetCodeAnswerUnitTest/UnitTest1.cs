@@ -1,3 +1,4 @@
+using LeetCodeAnswer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
@@ -109,9 +110,9 @@ namespace LeetCodeAnswerUnitTest
         [DataRow(new int[] { 2, 2, 2, 3, 3, 3, 1 }, 1)]
         [DataRow(new int[] { 2, 2, 3, 1 }, 1)]
         [DataRow(new int[] { 1, 2 }, 2)]
-        [DataRow(new int[] {1, 2, 2, 5, 3, 5},2)]
-        [DataRow(new int[] {1, 2, -2147483648}, -2147483648)]
-        public void TestThirdMax(int[] nums,int expected)
+        [DataRow(new int[] { 1, 2, 2, 5, 3, 5 }, 2)]
+        [DataRow(new int[] { 1, 2, -2147483648 }, -2147483648)]
+        public void TestThirdMax(int[] nums, int expected)
         {
             var actul = s.ThirdMax(nums);
             Assert.AreEqual(expected, actul);
@@ -119,13 +120,59 @@ namespace LeetCodeAnswerUnitTest
 
         [TestMethod]
         [DataRow("1", "2", "3")]
-        [DataRow("9","99","108")]
+        [DataRow("9", "99", "108")]
         [DataRow("11", "22", "33")]
         [DataRow("0", "0", "0")]
         [DataRow("19", "89", "108")]
         public void TestAddStrings(string a, string b, string expected)
         {
             var actul = s.AddStrings(a, b);
+            Assert.AreEqual(expected, actul);
+        }
+
+        [TestMethod]
+        public void PathSumTestMethod()
+        {
+            var root = new TreeNode(10)
+            {
+                left = new TreeNode(5)
+                {
+                    left = new TreeNode(3)
+                    {
+                        left = new TreeNode(3)
+                        {
+
+                        },
+                        right = new TreeNode(-2)
+                        {
+
+                        }
+                    },
+                    right = new TreeNode(2)
+                    {
+                        right = new TreeNode(1)
+                        {
+
+                        }
+                    }
+                },
+                right = new TreeNode(-3)
+                {
+                    right = new TreeNode(11)
+                    {
+
+                    }
+                }
+            };
+            var actul = s.PathSum(root, 8);
+            Assert.AreEqual(3, actul);
+        }
+
+        [TestMethod]
+        [DataRow(new char[] {'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'},4)]
+        public void CompressTestMethod(char[] arr,int expected)
+        {
+            var actul = s.Compress(arr);
             Assert.AreEqual(expected, actul);
         }
     }

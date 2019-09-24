@@ -403,7 +403,93 @@ namespace LeetCodeAnswer
             return s.Split(" ", StringSplitOptions.RemoveEmptyEntries).Length;
         }
 
+        public int PathSum(TreeNode root, int sum)
+        {
+            Stack<int> data = new Stack<int>();
+            int r = 0;
+            recursive(root, sum, data,ref r);
+            return r;
+        }
+        void recursive(TreeNode root, int sum, Stack<int> data,ref int r)
+        {
+            if (root==null) return;
+            data.Push(root.val);
+            int curr = 0;
+            var list = data.ToList();
+            for (int i = 0; i < list.Count; i++)
+            {//检查包含root->val的解的个数
+                curr += list[i];
+                if (curr == sum)
+                {
+                    r++;
+                }
+            }
+            recursive(root.left, sum, data,ref r);
+            recursive(root.right, sum, data,ref r);
+            data.Pop();
+        }
 
+        public int ArrangeCoins(int n)
+        {
+            int curr = 0;
+            int sub = n;
+            for (int i = 1; i <= n; i++)
+            {
+                sub -= i;
+                if (sub == 0)
+                {
+                    return i;
+                }
+                if (sub < 0)
+                {
+                    return i - 1;
+                }
+                if (sub > 0)
+                {
+                    continue;
+                }
+            }
+            return curr;
+        }
+
+        public int Compress(char[] chars)
+        {
+            int currSum = 0;
+            char curr = chars[0];
+            int currIndex = 0;
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (curr == chars[i])
+                {
+                    currSum++;
+                }
+
+                if (curr != chars[i])
+                {
+                    chars[currIndex++] = curr;
+                    if (currSum > 1)
+                    {
+                        string currStr = currSum.ToString();
+                        foreach (var item in currStr)
+                        {
+                            chars[currIndex++] = item;
+                        }
+                    }
+                    curr = chars[i];
+                    currSum = 1;
+                }
+            }
+            chars[currIndex++] = curr;
+            if (currSum > 1)
+            {
+                string currStr = currSum.ToString();
+                foreach (var item in currStr)
+                {
+                    chars[currIndex++] = item;
+                }
+            }
+            return currIndex;
+        }
     }
 
     public class Node
