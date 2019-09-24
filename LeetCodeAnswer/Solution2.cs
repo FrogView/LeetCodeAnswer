@@ -490,6 +490,66 @@ namespace LeetCodeAnswer
             }
             return currIndex;
         }
+
+        public int NumberOfBoomerangs(int[][] points)
+        {
+            int res = 0;
+            Dictionary<int, int> distinct = new Dictionary<int, int>();
+            for (int i = 0; i < points.Length; i++)
+            {
+                distinct.Clear();
+                for (int j = 0; j < points.Length; j++)
+                {
+                    if (i == j)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        int dis = (points[i][0] - points[j][0]) * (points[i][0] - points[j][0]) + (points[i][1] - points[j][1]) * (points[i][1] - points[j][1]);
+                        if (distinct.ContainsKey(dis))
+                        {
+                            res += distinct[dis] * 2;
+                            distinct[dis] += 1;
+                        }
+                        else
+                        {
+                            distinct.Add(dis, 1);
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
+        public IList<int> FindDisappearedNumbers(int[] nums)
+        {
+            List<int> res = new List<int>();
+            int[] arr = new int[nums.Length];
+            foreach (var item in nums)
+            {
+                arr[item - 1]++;
+            }
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 0)
+                {
+                    res.Add(i + 1);
+                }
+            }
+            return res;
+        }
+
+        public int MinMoves(int[] nums)
+        {
+            int count = 0;
+            int min = nums.Min();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                count += nums[i] - min;
+            }
+            return count;
+        }
     }
 
     public class Node

@@ -175,5 +175,14 @@ namespace LeetCodeAnswerUnitTest
             var actul = s.Compress(arr);
             Assert.AreEqual(expected, actul);
         }
+
+        [TestMethod]
+        [DataRow(new int[] { 1, 2, 3 }, 3)]
+        [DataRow(new int[] { 1, 2, 3, 8, 10 }, 19)]
+        public void MinMoves_Test(int[] arr, int expected)
+        {
+            var actul = s.MinMoves(arr);
+            Assert.AreEqual(expected, actul);
+        }
     }
 }
