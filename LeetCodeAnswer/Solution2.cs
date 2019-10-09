@@ -407,12 +407,12 @@ namespace LeetCodeAnswer
         {
             Stack<int> data = new Stack<int>();
             int r = 0;
-            recursive(root, sum, data,ref r);
+            recursive(root, sum, data, ref r);
             return r;
         }
-        void recursive(TreeNode root, int sum, Stack<int> data,ref int r)
+        void recursive(TreeNode root, int sum, Stack<int> data, ref int r)
         {
-            if (root==null) return;
+            if (root == null) return;
             data.Push(root.val);
             int curr = 0;
             var list = data.ToList();
@@ -424,8 +424,8 @@ namespace LeetCodeAnswer
                     r++;
                 }
             }
-            recursive(root.left, sum, data,ref r);
-            recursive(root.right, sum, data,ref r);
+            recursive(root.left, sum, data, ref r);
+            recursive(root.right, sum, data, ref r);
             data.Pop();
         }
 
@@ -549,6 +549,117 @@ namespace LeetCodeAnswer
                 count += nums[i] - min;
             }
             return count;
+        }
+
+        public int FindContentChildren(int[] g, int[] s)
+        {
+            Array.Sort(g);
+            Array.Sort(s);
+
+            int res = 0;
+            int gIndex = 0;
+            int sIndex = 0;
+            while (gIndex < g.Length && sIndex < s.Length)
+            {
+                if (s[sIndex] >= g[gIndex])
+                {
+                    res++;
+
+                    sIndex++;
+                    gIndex++;
+                }
+                else
+                {
+                    sIndex++;
+                }
+            }
+            return res;
+        }
+
+        public bool RepeatedSubstringPattern(string s)
+        {
+            string str = s + s;
+            return str.Substring(1, str.Length - 2).Contains(s);
+        }
+
+        public int HammingDistance(int x, int y)
+        {
+            int distance = 0;
+            while (x > 0 || y > 0)
+            {
+                var val1 = x & 0x01;
+                var val2 = y & 0x01;
+                if (val1 != val2)
+                {
+                    distance++;
+                }
+                x = x >> 1;
+                y = y >> 1;
+            }
+            return distance;
+        }
+
+        public int IslandPerimeter(int[][] grid)
+        {
+            int meter = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (grid[i][j] == 1)
+                    {
+                        meter += 4;
+                        if(i>0 && grid[i - 1][j] == 1)
+                        {
+                            meter -= 2;
+                        }
+                        if (j > 0 && grid[i][j - 1] == 1)
+                        {
+                            meter -= 2;
+                        }
+                    }
+                }
+            }
+            return meter;
+        }
+
+        public int FindRadius(int[] houses, int[] heaters)
+        {
+            int houseIndex = 0;
+            int heaterIndex = 0;
+
+            int left = 0;
+            int maxDistance = 0;
+            while (houseIndex < houses.Length && heaterIndex < heaters.Length)
+            {
+                if (houses[houseIndex] == heaters[heaterIndex])
+                {
+                    maxDistance = Math.Max(maxDistance, houseIndex - left - 1);
+                    left = houseIndex;
+
+                    houseIndex++;
+                    heaterIndex++;
+                }
+                else
+                {
+                    houseIndex++;
+                }
+            }
+            return maxDistance % 2 == 0 ? maxDistance / 2 : maxDistance / 2 + 1;
+        }
+
+        public int FindComplement(int num)
+        {
+            int res = 0;
+            int index = 0;
+            while (num > 0)
+            {
+                var val = num & 0x01;
+                val = val == 0 ? 1 : 0;
+                res = res | (val << index++);
+                num = num >> 1;
+            }
+            return res;
         }
     }
 

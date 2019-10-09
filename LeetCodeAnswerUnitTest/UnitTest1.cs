@@ -184,5 +184,14 @@ namespace LeetCodeAnswerUnitTest
             var actul = s.MinMoves(arr);
             Assert.AreEqual(expected, actul);
         }
+
+        [TestMethod]
+        [DataRow(5,2)]
+        [DataRow(1,0)]
+        public void FindComplement_Test(int num,int expected)
+        {
+            var actul = s.FindComplement(num);
+            Assert.AreEqual(expected, actul);
+        }
     }
 }
