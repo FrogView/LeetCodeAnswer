@@ -53,34 +53,34 @@ namespace LeetCodeAnswer
             result = solution.MaxProfit(new int[] { 7, 1, 5, 3, 6, 4 });
             result = solution.GetRow(5);
             result = solution.BinaryTreePaths(
-                new TreeNode(5)
+                new TreeNode(10)
                 {
-                    left = new TreeNode(4)
+                    left = new TreeNode(5)
                      {
-                        left = new TreeNode(11)
+                        left = new TreeNode(3)
                         {
-                            left = new TreeNode(7)
+                            left = new TreeNode(3)
                             {
                                 
                             },
-                            right=new TreeNode(2)
+                            right=new TreeNode(-2)
+                            {
+
+                            }
+                        },
+                        right=new TreeNode(2)
+                        {
+                            right = new TreeNode(1)
                             {
 
                             }
                         }
                     },
-                    right=new TreeNode(8)
+                    right=new TreeNode(-3)
                     {
-                        left = new TreeNode(13)
+                        right=new TreeNode(11)
                         {
-                            
-                        },
-                        right=new TreeNode(4)
-                        {
-                            right=new TreeNode(1)
-                            {
-
-                            }
+                           
                         }
                     }
                 });

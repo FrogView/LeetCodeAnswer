@@ -403,7 +403,264 @@ namespace LeetCodeAnswer
             return s.Split(" ", StringSplitOptions.RemoveEmptyEntries).Length;
         }
 
+        public int PathSum(TreeNode root, int sum)
+        {
+            Stack<int> data = new Stack<int>();
+            int r = 0;
+            recursive(root, sum, data, ref r);
+            return r;
+        }
+        void recursive(TreeNode root, int sum, Stack<int> data, ref int r)
+        {
+            if (root == null) return;
+            data.Push(root.val);
+            int curr = 0;
+            var list = data.ToList();
+            for (int i = 0; i < list.Count; i++)
+            {//检查包含root->val的解的个数
+                curr += list[i];
+                if (curr == sum)
+                {
+                    r++;
+                }
+            }
+            recursive(root.left, sum, data, ref r);
+            recursive(root.right, sum, data, ref r);
+            data.Pop();
+        }
 
+        public int ArrangeCoins(int n)
+        {
+            int curr = 0;
+            int sub = n;
+            for (int i = 1; i <= n; i++)
+            {
+                sub -= i;
+                if (sub == 0)
+                {
+                    return i;
+                }
+                if (sub < 0)
+                {
+                    return i - 1;
+                }
+                if (sub > 0)
+                {
+                    continue;
+                }
+            }
+            return curr;
+        }
+
+        public int Compress(char[] chars)
+        {
+            int currSum = 0;
+            char curr = chars[0];
+            int currIndex = 0;
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (curr == chars[i])
+                {
+                    currSum++;
+                }
+
+                if (curr != chars[i])
+                {
+                    chars[currIndex++] = curr;
+                    if (currSum > 1)
+                    {
+                        string currStr = currSum.ToString();
+                        foreach (var item in currStr)
+                        {
+                            chars[currIndex++] = item;
+                        }
+                    }
+                    curr = chars[i];
+                    currSum = 1;
+                }
+            }
+            chars[currIndex++] = curr;
+            if (currSum > 1)
+            {
+                string currStr = currSum.ToString();
+                foreach (var item in currStr)
+                {
+                    chars[currIndex++] = item;
+                }
+            }
+            return currIndex;
+        }
+
+        public int NumberOfBoomerangs(int[][] points)
+        {
+            int res = 0;
+            Dictionary<int, int> distinct = new Dictionary<int, int>();
+            for (int i = 0; i < points.Length; i++)
+            {
+                distinct.Clear();
+                for (int j = 0; j < points.Length; j++)
+                {
+                    if (i == j)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        int dis = (points[i][0] - points[j][0]) * (points[i][0] - points[j][0]) + (points[i][1] - points[j][1]) * (points[i][1] - points[j][1]);
+                        if (distinct.ContainsKey(dis))
+                        {
+                            res += distinct[dis] * 2;
+                            distinct[dis] += 1;
+                        }
+                        else
+                        {
+                            distinct.Add(dis, 1);
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
+        public IList<int> FindDisappearedNumbers(int[] nums)
+        {
+            List<int> res = new List<int>();
+            int[] arr = new int[nums.Length];
+            foreach (var item in nums)
+            {
+                arr[item - 1]++;
+            }
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 0)
+                {
+                    res.Add(i + 1);
+                }
+            }
+            return res;
+        }
+
+        public int MinMoves(int[] nums)
+        {
+            int count = 0;
+            int min = nums.Min();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                count += nums[i] - min;
+            }
+            return count;
+        }
+
+        public int FindContentChildren(int[] g, int[] s)
+        {
+            Array.Sort(g);
+            Array.Sort(s);
+
+            int res = 0;
+            int gIndex = 0;
+            int sIndex = 0;
+            while (gIndex < g.Length && sIndex < s.Length)
+            {
+                if (s[sIndex] >= g[gIndex])
+                {
+                    res++;
+
+                    sIndex++;
+                    gIndex++;
+                }
+                else
+                {
+                    sIndex++;
+                }
+            }
+            return res;
+        }
+
+        public bool RepeatedSubstringPattern(string s)
+        {
+            string str = s + s;
+            return str.Substring(1, str.Length - 2).Contains(s);
+        }
+
+        public int HammingDistance(int x, int y)
+        {
+            int distance = 0;
+            while (x > 0 || y > 0)
+            {
+                var val1 = x & 0x01;
+                var val2 = y & 0x01;
+                if (val1 != val2)
+                {
+                    distance++;
+                }
+                x = x >> 1;
+                y = y >> 1;
+            }
+            return distance;
+        }
+
+        public int IslandPerimeter(int[][] grid)
+        {
+            int meter = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (grid[i][j] == 1)
+                    {
+                        meter += 4;
+                        if(i>0 && grid[i - 1][j] == 1)
+                        {
+                            meter -= 2;
+                        }
+                        if (j > 0 && grid[i][j - 1] == 1)
+                        {
+                            meter -= 2;
+                        }
+                    }
+                }
+            }
+            return meter;
+        }
+
+        public int FindRadius(int[] houses, int[] heaters)
+        {
+            int houseIndex = 0;
+            int heaterIndex = 0;
+
+            int left = 0;
+            int maxDistance = 0;
+            while (houseIndex < houses.Length && heaterIndex < heaters.Length)
+            {
+                if (houses[houseIndex] == heaters[heaterIndex])
+                {
+                    maxDistance = Math.Max(maxDistance, houseIndex - left - 1);
+                    left = houseIndex;
+
+                    houseIndex++;
+                    heaterIndex++;
+                }
+                else
+                {
+                    houseIndex++;
+                }
+            }
+            return maxDistance % 2 == 0 ? maxDistance / 2 : maxDistance / 2 + 1;
+        }
+
+        public int FindComplement(int num)
+        {
+            int res = 0;
+            int index = 0;
+            while (num > 0)
+            {
+                var val = num & 0x01;
+                val = val == 0 ? 1 : 0;
+                res = res | (val << index++);
+                num = num >> 1;
+            }
+            return res;
+        }
     }
 
     public class Node
