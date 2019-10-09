@@ -661,6 +661,73 @@ namespace LeetCodeAnswer
             }
             return res;
         }
+
+        public string LicenseKeyFormatting(string S, int K)
+        {
+            var sb = new StringBuilder();
+            int counter = 0;
+            for (int i = S.Length - 1; i >= 0; i--)
+            {
+                if (S[i] != '-')
+                {
+                    if (counter == K)
+                    {
+                        counter = 1;
+                        sb.Append('-');
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                    sb.Append(char.ToUpper(S[i]));
+                }
+            }
+
+            var res = new string(sb.ToString().Reverse().ToArray());
+            return res;
+        }
+
+        public int FindMaxConsecutiveOnes(int[] nums)
+        {
+            int res = 0;
+            int curr = 0;
+            if (nums.Length <= 0) return 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 1)
+                {
+                    curr++;
+                }
+                else
+                {
+                    res = Math.Max(curr, res);
+                    curr = 0;
+                }
+            }
+            return res = Math.Max(curr, res);
+        }
+
+        public int[] ConstructRectangle(int area)
+        {
+            int sub = int.MaxValue;
+            int value1 = 1;
+            int value2 = 1;
+            int mid = area / 2;
+            for (int i = mid; i >= 1; i--)
+            {
+                if (area % i == 0)
+                {
+                    var curr = Math.Abs(i - (area / i));
+                    if (curr < sub)
+                    {
+                        value1 = i;
+                        value2 = area / i;
+                        sub = curr;
+                    }
+                }
+            }
+            return value1 > value2 ? new int[] { value1, value2 } : new int[] { value2, value1 };
+        }
     }
 
     public class Node
