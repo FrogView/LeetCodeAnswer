@@ -728,6 +728,49 @@ namespace LeetCodeAnswer
             }
             return value1 > value2 ? new int[] { value1, value2 } : new int[] { value2, value1 };
         }
+
+        public int[] NextGreaterElement(int[] nums1, int[] nums2)
+        {
+            int[] res = new int[nums1.Length];
+            for (int i = 0; i < nums1.Length; i++)
+            {
+                int value = nums1[i];
+                int index = Array.IndexOf(nums2, value);
+                if (index >= 0)
+                {
+                    res[i] = -1;
+                    for (int j = index; j < nums2.Length; j++)
+                    {
+                        if (nums2[j] > value)
+                        {
+                            res[i] = nums2[j];
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    res[i] = -1;
+                }
+            }
+            return res;
+        }
+
+        public string[] FindWords(string[] words)
+        {
+            string keyboard0 = "qwertyuiop";
+            string keyboard1 = "asdfghjkl";
+            string keyboard2 = "zxcvbnm";
+            List<string> res = new List<string>();
+            foreach (var word in words)
+            {
+                if (word.All(p => keyboard0.Contains(p.ToString().ToLower())) || word.All(p => keyboard1.Contains(p.ToString().ToLower())) || word.All(p => keyboard2.Contains(p.ToString().ToLower())))
+                {
+                    res.Add(word);
+                }
+            }
+            return res.ToArray();
+        }
     }
 
     public class Node
