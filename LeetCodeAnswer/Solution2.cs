@@ -771,6 +771,55 @@ namespace LeetCodeAnswer
             }
             return res.ToArray();
         }
+
+        public int[] FindMode(TreeNode root)
+        {
+            Dictionary<int, int> table = new Dictionary<int, int>();
+            if (root == null) return new int[0];
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            stack.Push(root);
+            while (stack.Count > 0)
+            {
+                int count = stack.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    TreeNode node = stack.Pop();
+                    if (node != null)
+                    {
+                        if (!table.ContainsKey(node.val))
+                        {
+                            table.Add(node.val, 1);
+                        }
+                        else
+                        {
+                            table[node.val]++;
+                        }
+                        stack.Push(node.left);
+                        stack.Push(node.right);
+                    }
+                }
+            }
+            int max = table.Values.Max();
+            return table.Where(p => p.Value == max).Select(p => p.Key).ToArray();
+        }
+
+        public string ConvertToBase7(int num)
+        {
+            if (num == 0) return "0";
+            StringBuilder sb = new StringBuilder();
+            bool flag = false;
+            if (num < 0)
+            {
+                flag = true;
+                num = -num;
+            }
+            while (num != 0)
+            {
+                sb.Insert(0,num % 7);
+                num = num / 7;
+            }
+            return flag ? "-" + sb.ToString() : sb.ToString();
+        }
     }
 
     public class Node
