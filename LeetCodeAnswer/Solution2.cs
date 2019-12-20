@@ -820,6 +820,35 @@ namespace LeetCodeAnswer
             }
             return flag ? "-" + sb.ToString() : sb.ToString();
         }
+
+        public string[] FindRelativeRanks(int[] nums)
+        {
+            var sortNums = nums.OrderByDescending(p => p).Select((value, index) => new { value, index = index + 1 }).ToDictionary(u=>u.value);
+            List<string> medalList = new List<string>();
+            foreach (var item in nums)
+            {
+                string medal = "";
+                var rank = sortNums[item].index;
+                if (rank == 1)
+                {
+                    medal = "Gold Medal";
+                }
+                else if (rank == 2)
+                {
+                    medal = "Silver Medal";
+                }
+                else if (rank == 3)
+                {
+                    medal = "Bronze Medal";
+                }
+                else
+                {
+                    medal = rank.ToString();
+                }
+                medalList.Add(medal);
+            }
+            return medalList.ToArray();
+        }
     }
 
     public class Node
