@@ -849,6 +849,56 @@ namespace LeetCodeAnswer
             }
             return medalList.ToArray();
         }
+
+        public bool CheckPerfectNumber(int num)
+        {
+            if (num < 2)
+            {
+                return false;
+            }
+            var sum = 0;
+            for (int m = 1; m * m <= num; m++)
+            {
+                if (num % m == 0)
+                {
+                    sum += m;
+                    var n = num / m;
+                    if (n != num && n != m)
+                    {
+                        sum += n;
+                    }
+                }
+            }
+            return sum == num;
+        }
+
+        public int Fib(int N)
+        {
+            if (N == 0) return 0;
+            if (N == 1) return 1;
+            return Fib(N - 1) + Fib(N - 2);
+        }
+
+        public bool DetectCapitalUse(string word)
+        {
+            return word.All(p => (p >= 'A' && p <= 'Z')) || word.Substring(1).All(p => (p >= 'a' && p <= 'z'));
+        }
+
+        public int FindLUSlength(string a, string b)
+        {
+            if (a.Length != b.Length)
+            {
+                return a.Length > b.Length ? a.Length : b.Length;
+            }
+            else if (a.Equals(b))
+            {
+                return -1;
+            }
+            else
+            {
+                return a.Length;
+            }
+        }
     }
 
     public class Node
