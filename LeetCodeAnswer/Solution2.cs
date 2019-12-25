@@ -899,6 +899,33 @@ namespace LeetCodeAnswer
                 return a.Length;
             }
         }
+
+        public int GetMinimumDifference(TreeNode root)
+        {
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode curr = root;
+            int diff = int.MaxValue;
+            int prev = 0;
+            bool first = true;
+            while (curr != null || stack.Count > 0)
+            {
+                if (curr != null)
+                {
+                    stack.Push(curr);
+                    curr = curr.left;
+                }
+                else
+                {
+                    curr = stack.Pop();
+                    if (!first) diff = Math.Min(diff, Math.Abs(prev - curr.val));
+                    else first = false;
+                    prev = curr.val;
+
+                    curr = curr.right;
+                }
+            }
+            return diff;
+        }
     }
 
     public class Node
